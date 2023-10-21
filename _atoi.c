@@ -1,41 +1,37 @@
 #include "shell.h"
 
 /**
- * check_interactive - A fun that checks if the
- * shell is running in interactive mode
- * @info: The pointer to the info structure.
+ * interactive - A fun that returns true if shell is interactive
+ * @info: The struct addresses
  *
- * Return: 1 if in interactive mode, 0 else
+ * Return: 1 if interactive mode, 0 else
  */
-int check_interactive(info_t *info)
+int interactive(info_t *info)
 {
 	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * is_separator - A fun that checks if a char is a sep
- * @c: The char to check.
- * @separator: The sep char
- *
- * Return: 1 if it's a separator, 0 otherwise
+ * is_delim - A fun that checks if char is a delim
+ * @c: Char to check.
+ * @delim: Delim string.
+ * Return: 1 if true, 0 if false
  */
-int is_separator(char c, char separator)
+int is_delim(char c, char *delim)
 {
-	while (separator)
-	{
-		if (*separator++ == c)
+	while (*delim)
+		if (*delim++ == c)
 			return (1);
-	}
 	return (0);
 }
 
 /**
- * is_alphabetic - A fun that checks if a char is alpha
- * @c: The char to check.
- *
- * Return: 1 if 'c' is alphabetic, 0 else
+ *_isalpha - A fun that checks for alphabetic character
+ *@c: The character to input
+ *Return: 1 if c is alpha, 0 else
  */
-int is_alphabetic(int c)
+
+int _isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
@@ -44,17 +40,17 @@ int is_alphabetic(int c)
 }
 
 /**
- * string_to_integer - A fun that converts a string to an int.
- * @s: The strg to be convt.
- *
- * Return: 0 if no numbers in the string, converted number else
+ *_atoi - a Fun that cont a str to an int.
+ *@s: String to be convd.
+ *Return: 0 if no No in string
  */
-int string_to_integer(char *s)
+
+int _atoi(char *s)
 {
 	int i, sign = 1, flag = 0, output;
 	unsigned int result = 0;
 
-	for (i = 0; s[i] != '\0' && flag != 2; i++)
+	for (i = 0;  s[i] != '\0' && flag != 2; i++)
 	{
 		if (s[i] == '-')
 			sign *= -1;

@@ -1,19 +1,19 @@
-#include "shell.h"
+#iinclude "shell.h"
 
 /**
- * exit_shell - A fun that exits the shell with a given exit status.
- * @info: The pointer to the info structure
- *
- * Return: 0 if info->argv[0] is not "exit".
+ * _myexit - aFun that exits the shell.
+ * @info: The sct cont pot arg
+ *  Return: It exits with a given exit status
+ *         (0) info.argv[0] != "exit"
  */
-int exit_shell(info_t *info)
+int _myexit(info_t *info)
 {
-	int exit_check;
+	int exitcheck;
 
-	if (info->argv[1]) /* Check if there is an exit argument. */
+	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exit_check = string_to_integer(info->argv[1]);
-		if (exit_check == -1)
+		exitcheck = _erratoi(info->argv[1]);
+		if (exitcheck == -1)
 		{
 			info->status = 2;
 			print_error(info, "Illegal number: ");
@@ -21,7 +21,7 @@ int exit_shell(info_t *info)
 			_eputchar('\n');
 			return (1);
 		}
-		info->err_num = exit_check;
+		info->err_num = _erratoi(info->argv[1]);
 		return (-2);
 	}
 	info->err_num = -1;
@@ -29,12 +29,11 @@ int exit_shell(info_t *info)
 }
 
 /**
- * change_directory - A fun that changes the current directory of the process.
- * @info: The pointer to the info structure.
- *
- * Return: Always returns 0.
+ * _mycd - A fun that changes the curnt dir of the pro
+ * @info: Str cont pot arg
+ *  Return: Always 0
  */
-int change_directory(info_t *info)
+int _mycd(info_t *info)
 {
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
@@ -46,7 +45,8 @@ int change_directory(info_t *info)
 	{
 		dir = _getenv(info, "HOME=");
 		if (!dir)
-			chdir_ret = chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
 			chdir_ret = chdir(dir);
 	}
@@ -58,17 +58,16 @@ int change_directory(info_t *info)
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD="));
-		_putchar('\n');
-		chdir_ret = chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
 	{
 		print_error(info, "can't cd to ");
-		_eputs(info->argv[1]);
-		_eputchar('\n');
+		_eputs(info->argv[1]), _eputchar('\n');
 	}
 	else
 	{
@@ -79,18 +78,17 @@ int change_directory(info_t *info)
 }
 
 /**
- * display_help - A fun that displays help information for the shell.
- * @info: The pointer to the info structure.
- *
- * Return: Returns 0.
+ * _myhelp - A fun that changes the curt dir of the prc
+ * @info: Str cont pot arg
+ *  Return: Always 0
  */
-int display_help(info_t *info)
+int _myhelp(info_t *info)
 {
 	char **arg_array;
 
 	arg_array = info->argv;
-	_puts("Help functionality is not yet implemented.\n");
+	_puts("help call works. Function not yet implemented \n");
 	if (0)
-		_puts(*arg_array); /* Temporary unused variable workaround */
+		_puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }
